@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CurrencyConverter</string>
+    <string name="defaultAmount">1</string>
+    <string name="lastUpdated">Last updated: %1$s</string>
+</resources>
