@@ -1,8 +1,8 @@
 package com.bourdi_bay.currencyconverter;
 
 class Currency {
-    private String m_name;
-    private double m_value;
+    private final String m_name;
+    private final double m_value;
 
     Currency(String name, Double value) {
         m_name = name;

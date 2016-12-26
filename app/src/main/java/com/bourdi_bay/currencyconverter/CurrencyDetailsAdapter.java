@@ -13,7 +13,7 @@ class CurrencyDetailsAdapter extends ArrayAdapter<String> {
 
     private final Context m_context;
     private final Currencies m_eurosRefRates;
-    private int m_positionToHide;
+    private int m_positionToHide = -1;
     private double m_inputAmount = 1.0;
 
     CurrencyDetailsAdapter(Context context, Currencies eurosRefRates) {
