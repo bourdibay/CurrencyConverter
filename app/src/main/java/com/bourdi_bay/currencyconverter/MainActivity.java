@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
+        final TextView lastUpdatedText = (TextView) findViewById(R.id.lastUpdated);
+        lastUpdatedText.setText(getString(R.string.lastUpdated, "no data yet"));
+
         syncLatestRates();
     }
 
