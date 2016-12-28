@@ -2,4 +2,8 @@
     <string name="app_name">CurrencyConverter</string>
     <string name="defaultAmount">1</string>
     <string name="lastUpdated">Last updated: %1$s</string>
+    <string name="initLastUpdatedText">no data yet</string>
+    <string name="cannotGetLatestRates_TakePrev">"Cannot retrieve latest currency rates. Use of data retrieved on %1$s."</string>
+    <string name="cannotGetLatestRates_NoInternet">"Cannot retrieve latest currency rates. Please enable internet since it's your first usage."</string>
+    <string name="initLastUpdatedTextNever">never</string>
 </resources>

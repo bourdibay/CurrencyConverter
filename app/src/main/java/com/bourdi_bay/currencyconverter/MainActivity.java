@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
         final TextView lastUpdatedText = (TextView) findViewById(R.id.lastUpdated);
-        lastUpdatedText.setText(getString(R.string.lastUpdated, "no data yet"));
+        lastUpdatedText.setText(getString(R.string.lastUpdated, getString(R.string.initLastUpdatedText)));
 
         syncLatestRates();
     }
@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        final String errorCannotGetLatest = "Cannot retrieve latest currency rates. ";
-
                         try {
                             FileInputStream inputStream = openFileInput(lastRatesFilename);
                             StringBuilder fileContent = new StringBuilder("");
@@ -83,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
                             final String lastTime = readXmlResponse(fileContent.toString());
 
                             lastUpdatedText.setText(getString(R.string.lastUpdated, lastTime));
-                            Toast.makeText(MainActivity.this, errorCannotGetLatest + "Use of data retrieved on " + lastTime, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, getString(R.string.cannotGetLatestRates_TakePrev, lastTime), Toast.LENGTH_SHORT).show();
                         } catch (IOException | CurrenciesBuilder.CurrenciesBuilderException e) {
-                            lastUpdatedText.setText(getString(R.string.lastUpdated, "never"));
-                            Toast.makeText(MainActivity.this, errorCannotGetLatest + "Please enable internet since it's your first use", Toast.LENGTH_SHORT).show();
+                            lastUpdatedText.setText(getString(R.string.lastUpdated, getString(R.string.initLastUpdatedTextNever)));
+                            Toast.makeText(MainActivity.this, getString(R.string.cannotGetLatestRates_NoInternet), Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }

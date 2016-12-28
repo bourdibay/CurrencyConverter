@@ -50,7 +50,7 @@ class CurrencyDetailsAdapter extends ArrayAdapter<String> {
         TextView nameCurrency = (TextView) rowView.findViewById(R.id.name_currency_detail);
         nameCurrency.setText(targetCurrency.getName());
         TextView amountCurrency = (TextView) rowView.findViewById(R.id.amount_currency_detail);
-        amountCurrency.setText(String.valueOf(newValue));
+        amountCurrency.setText(String.format("%.04f", newValue));
 
         ImageView iconCurrency = (ImageView) rowView.findViewById(R.id.icon_currency_detail);
         iconCurrency.setImageResource(m_context.getResources().getIdentifier("_" + targetCurrency.getName().toLowerCase(), "drawable", m_context.getPackageName()));
