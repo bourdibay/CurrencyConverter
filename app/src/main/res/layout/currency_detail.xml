@@ -10,36 +10,33 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"
-        android:layout_marginEnd="6dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginEnd="10dip"
         android:contentDescription="TODO"
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:id="@+id/name_currency_detail"
         android:layout_width="match_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/icon_currency_detail"
         android:layout_toEndOf="@id/icon_currency_detail"
-        android:ellipsize="marquee"
         android:maxLines="1"
-        android:textSize="12sp"/>
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/amount_currency_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/name_currency_detail"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toRightOf="@id/icon_currency_detail"
         android:layout_toEndOf="@id/icon_currency_detail"
-        android:gravity="center_vertical"
         android:textSize="16sp"/>
 
 </RelativeLayout>
