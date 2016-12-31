@@ -29,11 +29,11 @@
                     android:paddingTop="?attr/actionBarSize">
 
         <TextView
-            android:text="@string/lastUpdated"
+            android:id="@+id/lastUpdated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:id="@+id/lastUpdated"/>
+            android:text="@string/lastUpdated"/>
 
         <LinearLayout
             android:id="@+id/layout_choice"
@@ -41,30 +41,32 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lastUpdated"
             android:orientation="horizontal"
-            android:weightSum="6">
+            android:weightSum="3">
 
             <Spinner
                 android:id="@+id/choice_currency"
-                android:layout_weight="5"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="2"
+                android:dropDownWidth="wrap_content"/>
 
             <EditText
                 android:id="@+id/input_amount"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ems="10"
-                android:text="@string/defaultAmount"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:text="@string/defaultAmount"/>
 
         </LinearLayout>
 
         <View
             android:id="@+id/separation_space"
-            android:layout_below="@+id/layout_choice"
             android:layout_width="match_parent"
             android:layout_height="10dp"
+            android:layout_below="@+id/layout_choice"
             android:background="@android:color/black"
             />
 

@@ -13,7 +13,7 @@
         android:layout_marginRight="10dip"
         android:layout_marginEnd="10dip"
         android:contentDescription="TODO"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/launcher"/>
 
     <TextView
         android:id="@+id/name_currency_detail"

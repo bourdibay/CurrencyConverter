@@ -1,7 +1,9 @@
 package com.bourdi_bay.currencyconverter;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -24,13 +26,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    static private final String lastRatesFilename = "last_rates.txt";
+    static private final String latestRatesFilename = "latest_rates.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        final TextView lastUpdatedText = (TextView) findViewById(R.id.lastUpdated);
-        lastUpdatedText.setText(getString(R.string.lastUpdated, getString(R.string.initLastUpdatedText)));
+        ((TextView) findViewById(R.id.lastUpdated)).setText(getString(R.string.lastUpdated, getString(R.string.initLastUpdatedText)));
 
         syncLatestRates();
     }
@@ -54,14 +54,16 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d("Response", "Response from url is " + response);
                         try {
-                            final String lastTime = readXmlResponse(response);
-                            FileOutputStream outputStream;
-                            outputStream = openFileOutput(lastRatesFilename, Context.MODE_PRIVATE);
-                            outputStream.write(response.getBytes());
-                            outputStream.close();
+                            final Currencies currencies = getCurrencies(response);
+                            if (currencies == null) {
+                                return;
+                            }
+                            setupWidgets(currencies);
 
-                            lastUpdatedText.setText(getString(R.string.lastUpdated, lastTime));
-                        } catch (CurrenciesBuilder.CurrenciesBuilderException | IOException e) {
+                            final CurrenciesFile file = new CurrenciesFile(MainActivity.this, latestRatesFilename);
+                            file.save(response);
+                            lastUpdatedText.setText(getString(R.string.lastUpdated, currencies.getTime()));
+                        } catch (CurrenciesBuilder.CurrenciesBuilderException e) {
                             e.printStackTrace();
                         }
                     }
@@ -70,18 +72,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
-                            FileInputStream inputStream = openFileInput(lastRatesFilename);
-                            StringBuilder fileContent = new StringBuilder("");
-                            byte[] buffer = new byte[1024];
-                            int n;
-                            while ((n = inputStream.read(buffer)) != -1) {
-                                fileContent.append(new String(buffer, 0, n));
+                            final CurrenciesFile file = new CurrenciesFile(MainActivity.this, latestRatesFilename);
+                            final Currencies currencies = getCurrencies(file.load());
+                            if (currencies == null) {
+                                return;
                             }
 
-                            final String lastTime = readXmlResponse(fileContent.toString());
-
-                            lastUpdatedText.setText(getString(R.string.lastUpdated, lastTime));
-                            Toast.makeText(MainActivity.this, getString(R.string.cannotGetLatestRates_TakePrev, lastTime), Toast.LENGTH_SHORT).show();
+                            lastUpdatedText.setText(getString(R.string.lastUpdated, currencies.getTime()));
+                            Toast.makeText(MainActivity.this, getString(R.string.cannotGetLatestRates_TakePrev, currencies.getTime()), Toast.LENGTH_SHORT).show();
                         } catch (IOException | CurrenciesBuilder.CurrenciesBuilderException e) {
                             lastUpdatedText.setText(getString(R.string.lastUpdated, getString(R.string.initLastUpdatedTextNever)));
                             Toast.makeText(MainActivity.this, getString(R.string.cannotGetLatestRates_NoInternet), Toast.LENGTH_SHORT).show();
@@ -89,6 +87,15 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }));
+    }
+
+    private Currencies getCurrencies(String xml) throws CurrenciesBuilder.CurrenciesBuilderException {
+        final CurrenciesBuilder builder = new CurrenciesBuilder();
+        final List<Currencies> listEurosRefRates = builder.fromXml(xml);
+        if (listEurosRefRates.size() <= 0) {
+            return null;
+        }
+        return listEurosRefRates.get(0);
     }
 
     private void updateAmountInAdapter(CurrencyDetailsAdapter listCurrenciesAdapter, EditText amountInput) {
@@ -99,20 +106,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String readXmlResponse(String response) throws CurrenciesBuilder.CurrenciesBuilderException {
-        final ListView listCurrencies = (ListView) findViewById(R.id.list_currencies);
+    private void setupWidgets(Currencies eurosRefRates) {
         final Spinner choiceCurrencies = (Spinner) findViewById(R.id.choice_currency);
-        final EditText amountInput = (EditText) findViewById(R.id.input_amount);
-
-        final CurrenciesBuilder builder = new CurrenciesBuilder();
-        final Currencies eurosRefRates = builder.fromXml(response);
-
-        final CurrencySpinnerAdapter choiceCurrenciesAdapter = new CurrencySpinnerAdapter(MainActivity.this, eurosRefRates);
-        choiceCurrencies.setAdapter(choiceCurrenciesAdapter);
+        choiceCurrencies.setAdapter(new CurrencySpinnerAdapter(MainActivity.this, eurosRefRates));
 
         final CurrencyDetailsAdapter listCurrenciesAdapter = new CurrencyDetailsAdapter(MainActivity.this, eurosRefRates);
         listCurrenciesAdapter.hidePosition(choiceCurrencies.getSelectedItemPosition());
+        final EditText amountInput = (EditText) findViewById(R.id.input_amount);
         updateAmountInAdapter(listCurrenciesAdapter, amountInput);
+        final ListView listCurrencies = (ListView) findViewById(R.id.list_currencies);
         listCurrencies.setAdapter(listCurrenciesAdapter);
 
         choiceCurrencies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -128,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         amountInput.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -144,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 listCurrenciesAdapter.notifyDataSetChanged();
             }
         });
-
-        return eurosRefRates.getTime();
     }
 
     @Override
@@ -156,9 +155,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_sync) {
-            syncLatestRates();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_sync:
+                syncLatestRates();
+                return true;
+            case R.id.action_graph:
+                Intent act = new Intent(this, GraphActivity.class);
+                TaskStackBuilder.create(this).addNextIntentWithParentStack(act).startActivities();
+                return true;
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    TaskStackBuilder.create(this)
+                            .addNextIntentWithParentStack(upIntent)
+                            .startActivities();
+                } else {
+                    NavUtils.navigateUpTo(this, upIntent);
+                }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

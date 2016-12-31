@@ -45,7 +45,7 @@ class CurrencyDetailsAdapter extends ArrayAdapter<String> {
         final Currency selectedCurrency = m_eurosRefRates.getCurrencies().get(m_positionToHide);
         final Currency targetCurrency = m_eurosRefRates.getCurrencies().get(m_positionToHide > position ? position : position + 1);
 
-        final double newValue = m_eurosRefRates.getCurrencyValue(m_inputAmount, selectedCurrency, targetCurrency);
+        final double newValue = Currencies.getCurrencyValue(m_inputAmount, selectedCurrency, targetCurrency);
 
         TextView nameCurrency = (TextView) rowView.findViewById(R.id.name_currency_detail);
         nameCurrency.setText(targetCurrency.getName());

@@ -6,9 +6,16 @@
     tools:context=".MainActivity">
     <item
         android:id="@+id/action_sync"
-        android:icon="@drawable/sync"
+        android:icon="@drawable/ic_sync"
         android:orderInCategory="200"
         android:title="Refresh"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/action_graph"
+        android:icon="@drawable/ic_graph"
+        android:orderInCategory="200"
+        android:title="Graph"
         app:showAsAction="ifRoom"
         />
 

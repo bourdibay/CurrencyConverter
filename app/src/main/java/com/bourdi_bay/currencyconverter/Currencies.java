@@ -44,7 +44,7 @@ class Currencies {
         return currencyNames;
     }
 
-    double getCurrencyValue(double amount, Currency currentCurrency, Currency targetCurrency) {
+    static double getCurrencyValue(double amount, Currency currentCurrency, Currency targetCurrency) {
         double initialToEuros = 1.0;
         if (!currentCurrency.getName().equals("EUR")) {
             initialToEuros = 1.0 / currentCurrency.getValue();
@@ -52,5 +52,4 @@ class Currencies {
         initialToEuros = initialToEuros * amount;
         return targetCurrency.getValue() * initialToEuros;
     }
-
 }
