@@ -13,4 +13,4 @@ For the visualization of the last 90 days, I use the chart library [MPAndroidCha
 
 ![screen1](https://github.com/bourdibay/CurrencyConverter/blob/master/Screenshots/home.png)
 ![screen2](https://github.com/bourdibay/CurrencyConverter/blob/master/Screenshots/choiceCurrency.png)
-![screen3](https://github.com/bourdibay/CurrencyConverter/blob/master/Screenshots/graphHistory.png)
+![screen3](https://github.com/bourdibay/CurrencyConverter/blob/master/Screenshots/graphRatesHistory.png)
