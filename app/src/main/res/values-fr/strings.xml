@@ -1,7 +1,8 @@
 <resources>
     <string name="lastUpdated">Dernière mise à jour: %1$s</string>
-    <string name="initLastUpdatedText">pas de donnée encore</string>
+    <string name="initLastUpdatedText">pas encore de donnée</string>
     <string name="cannotGetLatestRates_TakePrev">"Impossible de récupérer les dernier taux. Utilisation des taux du %1$s."</string>
     <string name="cannotGetLatestRates_NoInternet">"Impossible de récupérer les dernier taux. Veuillez activer Internet puisqu'il s'agit de la première utilisation."</string>
     <string name="initLastUpdatedTextNever">jamais</string>
+    <string name="title_activity_graph">90 dernier jours</string>
 </resources>
