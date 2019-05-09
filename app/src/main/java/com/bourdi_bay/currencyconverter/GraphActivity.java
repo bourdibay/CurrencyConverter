@@ -52,7 +52,7 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     private void syncLatestRates() {
-        final TextView lastUpdatedText = (TextView) findViewById(R.id.lastUpdatedGraph);
+        final TextView lastUpdatedText = findViewById(R.id.lastUpdatedGraph);
         final RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(new StringRequest(Request.Method.GET, "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml",
                 new Response.Listener<String>() {
@@ -114,7 +114,7 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     private void refreshGraph(final HashMap<String, ArrayList<Pair<String, Currency>>> currenciesHistory, String sourceCurrency, String targetCurrency) {
-        final LineChart chart = (LineChart) findViewById(R.id.chart);
+        final LineChart chart = findViewById(R.id.chart);
 
         final ArrayList<Pair<String, Currency>> sourceCurrencyHistory = currenciesHistory.get(sourceCurrency);
         final ArrayList<Pair<String, Currency>> targetCurrencyHistory = currenciesHistory.get(targetCurrency);
@@ -149,16 +149,16 @@ public class GraphActivity extends AppCompatActivity {
     private void setupWidgets(final List<Currencies> listCurrencies) {
         final Currencies eurosRefRates = listCurrencies.get(0);
 
-        final Spinner sourceCurrencies = (Spinner) findViewById(R.id.choice_currency_source);
+        final Spinner sourceCurrencies = findViewById(R.id.choice_currency_source);
         sourceCurrencies.setAdapter(new CurrencySpinnerAdapter(GraphActivity.this, eurosRefRates));
-        final Spinner targetCurrencies = (Spinner) findViewById(R.id.choice_currency_target);
+        final Spinner targetCurrencies = findViewById(R.id.choice_currency_target);
         targetCurrencies.setAdapter(new CurrencySpinnerAdapter(GraphActivity.this, eurosRefRates));
         // So that we have 2 different currencies at the launch of the app.
         if (eurosRefRates.getCurrencies().size() > 1) {
             targetCurrencies.setSelection(1);
         }
 
-        final LineChart chart = (LineChart) findViewById(R.id.chart);
+        final LineChart chart = findViewById(R.id.chart);
         final Description description = new Description();
         description.setText("");
         chart.setDescription(description);
@@ -196,7 +196,7 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton switchCurrency = (ImageButton) findViewById(R.id.switch_currency_graph);
+        final ImageButton switchCurrency = findViewById(R.id.switch_currency_graph);
         switchCurrency.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void syncLatestRates() {
-        final TextView lastUpdatedText = (TextView) findViewById(R.id.lastUpdated);
+        final TextView lastUpdatedText = findViewById(R.id.lastUpdated);
         final RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(new StringRequest(Request.Method.GET, "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
+        queue.add(new StringRequest(Request.Method.GET, "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -107,14 +107,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupWidgets(Currencies eurosRefRates) {
-        final Spinner choiceCurrencies = (Spinner) findViewById(R.id.choice_currency);
+        final Spinner choiceCurrencies = findViewById(R.id.choice_currency);
         choiceCurrencies.setAdapter(new CurrencySpinnerAdapter(MainActivity.this, eurosRefRates));
 
         final CurrencyDetailsAdapter listCurrenciesAdapter = new CurrencyDetailsAdapter(MainActivity.this, eurosRefRates);
         listCurrenciesAdapter.hidePosition(choiceCurrencies.getSelectedItemPosition());
-        final EditText amountInput = (EditText) findViewById(R.id.input_amount);
+        final EditText amountInput = findViewById(R.id.input_amount);
         updateAmountInAdapter(listCurrenciesAdapter, amountInput);
-        final ListView listCurrencies = (ListView) findViewById(R.id.list_currencies);
+        final ListView listCurrencies = findViewById(R.id.list_currencies);
         listCurrencies.setAdapter(listCurrenciesAdapter);
 
         choiceCurrencies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -29,7 +29,7 @@ class CurrenciesFile {
 
     String load() throws IOException {
         FileInputStream inputStream = m_context.openFileInput(m_filename);
-        StringBuilder fileContent = new StringBuilder("");
+        StringBuilder fileContent = new StringBuilder();
         byte[] buffer = new byte[1024];
         int n;
         while ((n = inputStream.read(buffer)) != -1) {

@@ -40,10 +40,10 @@ class CurrencySpinnerAdapter extends ArrayAdapter<String> {
 
         Currency currency = m_eurosRefRates.getCurrencies().get(position);
 
-        TextView label = (TextView) rowView.findViewById(R.id.name_currency_choice);
+        TextView label = rowView.findViewById(R.id.name_currency_choice);
         label.setText(currency.getName());
 
-        ImageView iconCurrency = (ImageView) rowView.findViewById(R.id.icon_currency_choice);
+        ImageView iconCurrency = rowView.findViewById(R.id.icon_currency_choice);
         iconCurrency.setImageResource(m_context.getResources().getIdentifier("_" + currency.getName().toLowerCase(), "drawable", m_context.getPackageName()));
 
         return rowView;

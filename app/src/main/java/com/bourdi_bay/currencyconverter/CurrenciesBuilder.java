@@ -9,12 +9,6 @@ import java.util.List;
 
 class CurrenciesBuilder {
 
-    class CurrenciesBuilderException extends java.lang.Exception {
-        CurrenciesBuilderException(String msg) {
-            super(msg);
-        }
-    }
-
     List<Currencies> fromXml(String xml) throws CurrenciesBuilderException {
         final ArrayList<Currencies> listCurrencies = new ArrayList<>();
 
@@ -49,5 +43,11 @@ class CurrenciesBuilder {
             throw new CurrenciesBuilderException(e.getMessage());
         }
         return listCurrencies;
+    }
+
+    class CurrenciesBuilderException extends java.lang.Exception {
+        CurrenciesBuilderException(String msg) {
+            super(msg);
+        }
     }
 }

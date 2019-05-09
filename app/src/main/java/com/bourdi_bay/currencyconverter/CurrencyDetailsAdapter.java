@@ -24,13 +24,14 @@ class CurrencyDetailsAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public int getCount(){
+    public int getCount() {
         return m_eurosRefRates.getCurrencies().size() - 1; // less the selected one in the spinner.
     }
 
     void hidePosition(int pos) {
         m_positionToHide = pos;
     }
+
     void setInputAmount(double inputAmount) {
         m_inputAmount = inputAmount;
     }
@@ -47,12 +48,12 @@ class CurrencyDetailsAdapter extends ArrayAdapter<String> {
 
         final double newValue = Currencies.getCurrencyValue(m_inputAmount, selectedCurrency, targetCurrency);
 
-        TextView nameCurrency = (TextView) rowView.findViewById(R.id.name_currency_detail);
+        TextView nameCurrency = rowView.findViewById(R.id.name_currency_detail);
         nameCurrency.setText(targetCurrency.getName());
-        TextView amountCurrency = (TextView) rowView.findViewById(R.id.amount_currency_detail);
+        TextView amountCurrency = rowView.findViewById(R.id.amount_currency_detail);
         amountCurrency.setText(String.format("%.04f", newValue));
 
-        ImageView iconCurrency = (ImageView) rowView.findViewById(R.id.icon_currency_detail);
+        ImageView iconCurrency = rowView.findViewById(R.id.icon_currency_detail);
         iconCurrency.setImageResource(m_context.getResources().getIdentifier("_" + targetCurrency.getName().toLowerCase(), "drawable", m_context.getPackageName()));
 
         return rowView;

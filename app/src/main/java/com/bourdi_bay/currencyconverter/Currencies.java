@@ -7,6 +7,15 @@ class Currencies {
     private final ArrayList<Currency> m_currencies = new ArrayList<>();
     private String m_time = "";
 
+    static double getCurrencyValue(double amount, Currency currentCurrency, Currency targetCurrency) {
+        double initialToEuros = 1.0;
+        if (!currentCurrency.getName().equals("EUR")) {
+            initialToEuros = 1.0 / currentCurrency.getValue();
+        }
+        initialToEuros = initialToEuros * amount;
+        return targetCurrency.getValue() * initialToEuros;
+    }
+
     String getTime() {
         return m_time;
     }
@@ -42,14 +51,5 @@ class Currencies {
             currencyNames.add(curr.getName());
         }
         return currencyNames;
-    }
-
-    static double getCurrencyValue(double amount, Currency currentCurrency, Currency targetCurrency) {
-        double initialToEuros = 1.0;
-        if (!currentCurrency.getName().equals("EUR")) {
-            initialToEuros = 1.0 / currentCurrency.getValue();
-        }
-        initialToEuros = initialToEuros * amount;
-        return targetCurrency.getValue() * initialToEuros;
     }
 }
