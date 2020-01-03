@@ -24,16 +24,16 @@ class CurrencySpinnerAdapter extends ArrayAdapter<String> {
     @Override
     public View getDropDownView(int position, View convertView,
                                 @NonNull ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
+        return getCustomView(position, parent);
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
+        return getCustomView(position, parent);
     }
 
-    private View getCustomView(int position, View convertView, ViewGroup parent) {
+    private View getCustomView(int position, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) m_context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.currency_choice, parent, false);
